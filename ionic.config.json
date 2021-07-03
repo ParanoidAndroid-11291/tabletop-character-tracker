@@ -1,0 +1,7 @@
+{
+  "name": "tabletop-character-tracker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
