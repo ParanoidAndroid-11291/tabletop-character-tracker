@@ -12,6 +12,7 @@ import {
 } from '@ionic/react';
 //components
 //files
+import { auth } from '../../firebase';
 //styles
 
 const SettingsPage: React.FC = () => {
@@ -28,7 +29,8 @@ const SettingsPage: React.FC = () => {
       <IonContent className="ion-padding">
         <IonButton
           color="medium"
-          expand="block">
+          expand="block"
+          onClick={() => auth.signOut()}>
           Logout
         </IonButton>
       </IonContent>

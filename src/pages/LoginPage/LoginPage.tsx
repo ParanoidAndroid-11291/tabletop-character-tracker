@@ -11,7 +11,9 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonInput
+  IonInput,
+  IonLoading,
+  useIonToast
 } from '@ionic/react';
 //pages
 //files
@@ -20,18 +22,25 @@ import { useAuth } from '../../auth';
 import { auth } from '../../firebase';
 //styles
 
-interface Props {
-  onLogin: () => void;
-}
-
-const LoginPage: React.FC<Props> = ({ onLogin }) => {
+const LoginPage: React.FC = () => {
+  const [ present, dismiss ] = useIonToast();
   const { loggedIn } = useAuth();
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ loading, setLoading ] = useState(false);
 
   const handleLogin = async () => {
-    const credential = await auth.signInWithEmailAndPassword('test@example.com', 'password');
-    console.log("login auth", credential);
+    try{
+      setLoading(true);
+      const credential = await auth.signInWithEmailAndPassword(email, password);
+    }catch(e) {
+      setLoading(false);
+      present({
+        message: e.message,
+        color: "danger",
+        duration: 2000
+      });
+    }
   }
 
   if (loggedIn) {
@@ -65,6 +74,7 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             </IonItem>
           </IonList>
         <IonButton onClick={ handleLogin } expand="block">Login</IonButton>
+        <IonLoading isOpen={ loading } />
       </IonContent>
     </IonPage>
   );

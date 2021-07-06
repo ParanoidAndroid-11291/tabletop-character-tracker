@@ -1,7 +1,6 @@
 //packages
-import { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp } from '@ionic/react';
+import { IonApp, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 //pages
@@ -9,7 +8,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import PrivateRoutes from './PrivateRoutes';
 
 //files
-import { AuthContext } from './auth';
+import { AuthContext, useAuthInit } from './auth';
 import {
   CHARACTER_LIST_ROUTE,
   LOGIN_ROUTE
@@ -17,20 +16,24 @@ import {
 //styles
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { loading, auth } = useAuthInit();
+
+  if (loading) {
+    return <IonLoading isOpen />;
+  }
 
   return (
     <IonApp>
-      <AuthContext.Provider value={{ loggedIn }}>
+      <AuthContext.Provider value={auth}>
         <IonReactRouter>
           <Route exact path={ LOGIN_ROUTE }>
-            <LoginPage onLogin={() => setLoggedIn(true)}/>
+            <LoginPage />
           </Route>
           <Route path="/my">
             <PrivateRoutes />
           </Route>
           <Route render={() => {
-            return loggedIn ?
+            return auth ?
             <Redirect to={ CHARACTER_LIST_ROUTE } /> :
             <Redirect to={ LOGIN_ROUTE } />
           }}/>
