@@ -9,7 +9,9 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardSubtitle
+  IonCardSubtitle,
+  IonButtons,
+  IonMenuButton
 } from '@ionic/react';
 //pages
 //files
@@ -23,6 +25,9 @@ const CharacterListPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton></IonMenuButton>
+          </IonButtons>
           <IonTitle>My Characters</IonTitle>
         </IonToolbar>
       </IonHeader>

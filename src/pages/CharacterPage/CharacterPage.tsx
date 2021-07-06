@@ -4,7 +4,9 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonContent
+  IonContent,
+  IonButtons,
+  IonBackButton
 } from '@ionic/react';
 import React from 'react';
 import { useParams } from 'react-router';
@@ -23,6 +25,9 @@ const CharacterPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton/>
+          </IonButtons>
           <IonTitle>{character.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
