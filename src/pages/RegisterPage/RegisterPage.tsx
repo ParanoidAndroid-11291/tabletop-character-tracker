@@ -17,22 +17,22 @@ import {
 } from '@ionic/react';
 //pages
 //files
-import { CHARACTER_LIST_ROUTE, REGISTER_ROUTE } from '../../routes';
+import { CHARACTER_LIST_ROUTE, LOGIN_ROUTE } from '../../routes';
 import { useAuth } from '../../auth';
 import { auth } from '../../firebase';
 //styles
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
   const [ present, dismiss ] = useIonToast();
   const { loggedIn } = useAuth();
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ loading, setLoading ] = useState(false);
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try{
       setLoading(true);
-      const credential = await auth.signInWithEmailAndPassword(email, password);
+      const credential = await auth.createUserWithEmailAndPassword(email, password);
     }catch(e) {
       setLoading(false);
       present({
@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonTitle>Sign Up</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
@@ -73,12 +73,12 @@ const LoginPage: React.FC = () => {
               />
             </IonItem>
           </IonList>
-        <IonButton onClick={ handleLogin } expand="block">Sign In</IonButton>
-        <IonButton routerLink={ REGISTER_ROUTE } expand="block" fill="clear">Don't have an account?</IonButton>
+        <IonButton onClick={ handleRegister } expand="block">Sign Up</IonButton>
+        <IonButton routerLink={ LOGIN_ROUTE } expand="block" fill="clear">Back</IonButton>
         <IonLoading isOpen={ loading } />
       </IonContent>
     </IonPage>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

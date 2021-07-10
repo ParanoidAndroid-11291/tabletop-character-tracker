@@ -1,4 +1,5 @@
 //packages
+import { useState, useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -11,16 +12,46 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonButtons,
-  IonMenuButton
+  IonMenuButton,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonText
 } from '@ionic/react';
+import { add as addIcon } from 'ionicons/icons';
+import { firestore } from '../../firebase';
 //pages
 //files
-import { characters } from '../../characters';
-import { CHARACTER_LIST_ROUTE } from '../../routes';
+import { CHARACTER_LIST_ROUTE, ADD_CHARACTER_ROUTE } from '../../routes';
+import { useAuth } from '../../auth';
+import { Character, toCharacter } from '../../models';
 //styles
 import './CharacterListPage.css';
 
 const CharacterListPage: React.FC = () => {
+  const [ characters, setCharacters ] = useState<Character[]>([]);
+  const { userId } = useAuth();
+  useEffect(() => {
+    const charactersRef = firestore.collection('users').doc(userId)
+      .collection('characters');
+    return charactersRef.limit(10).onSnapshot(({ docs }) => setCharacters(docs.map(toCharacter)));
+  },[userId])
+
+  const characterList = (characters: Character[]) => {
+    return (
+      <IonList>
+        {characters.map((character) =>
+          <IonCard key={character.id} routerLink={`${CHARACTER_LIST_ROUTE}/view/${character.id}`}>
+            <IonCardHeader>
+              <IonCardTitle>{character.name}</IonCardTitle>
+              <IonCardSubtitle>{`Level ${character.level} ${character.race} ${character.class}`}</IonCardSubtitle>
+            </IonCardHeader>
+          </IonCard>
+        )}
+      </IonList>
+    );
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -32,16 +63,17 @@ const CharacterListPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
-        <IonList>
-          {characters.map((character) =>
-            <IonCard key={character.id} routerLink={`${CHARACTER_LIST_ROUTE}/${character.id}`}>
-              <IonCardHeader>
-                <IonCardTitle>{character.name}</IonCardTitle>
-                <IonCardSubtitle>{`Level ${character.level} ${character.race} ${character.class}`}</IonCardSubtitle>
-              </IonCardHeader>
-            </IonCard>
-          )}
-        </IonList>
+        { characters.length > 0 ?
+          characterList(characters) :
+          <IonText>
+            <h3>Add a character</h3>
+          </IonText>
+        }
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton routerLink={ ADD_CHARACTER_ROUTE }>
+            <IonIcon icon={addIcon} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

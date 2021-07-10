@@ -5,13 +5,15 @@ import { IonReactRouter } from '@ionic/react-router';
 
 //pages
 import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 import PrivateRoutes from './PrivateRoutes';
 
 //files
 import { AuthContext, useAuthInit } from './auth';
 import {
   CHARACTER_LIST_ROUTE,
-  LOGIN_ROUTE
+  LOGIN_ROUTE,
+  REGISTER_ROUTE
 } from './routes';
 //styles
 
@@ -28,6 +30,9 @@ const App: React.FC = () => {
         <IonReactRouter>
           <Route exact path={ LOGIN_ROUTE }>
             <LoginPage />
+          </Route>
+          <Route exact path={ REGISTER_ROUTE }>
+            <RegisterPage />
           </Route>
           <Route path="/my">
             <PrivateRoutes />

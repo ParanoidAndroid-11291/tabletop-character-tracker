@@ -6,13 +6,15 @@ import { IonPage, IonRouterOutlet } from '@ionic/react';
 import CharacterListPage from './pages/CharacterListPage/CharacterListPage';
 import CharacterPage from './pages/CharacterPage/CharacterPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
+import AddCharacterPage from './pages/AddCharacterPage/AddCharacterPage';
 import AppMenu from './AppMenu';
 //files
 import {
   CHARACTER_LIST_ROUTE,
   CHARACTER_ROUTE,
   SETTINGS_ROUTE,
-  LOGIN_ROUTE
+  LOGIN_ROUTE,
+  ADD_CHARACTER_ROUTE
 } from './routes';
 import { useAuth } from './auth';
 //styles
@@ -34,6 +36,9 @@ const PrivateRoutes: React.FC = () => {
           </Route>
           <Route exact path={ CHARACTER_ROUTE }>
             <CharacterPage />
+          </Route>
+          <Route exact path={ ADD_CHARACTER_ROUTE }>
+            <AddCharacterPage />
           </Route>
           <Route exact path={ SETTINGS_ROUTE }>
             <SettingsPage />
