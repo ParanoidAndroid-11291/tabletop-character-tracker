@@ -1,6 +1,7 @@
 //packages
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   IonPage,
   IonHeader,
@@ -15,32 +16,33 @@ import {
   IonLoading,
   useIonToast
 } from '@ionic/react';
-//pages
+//actions
+import { auth, authChange, clearError } from '../../actions/AuthActions/AuthActions';
 //files
 import { CHARACTER_LIST_ROUTE, REGISTER_ROUTE } from '../../routes';
-import { useAuth } from '../../auth';
-import { auth } from '../../firebase';
+import { RootStore } from '../../store';
 //styles
 
 const LoginPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const authState = useSelector((state: RootStore) => state.auth );
+  const { loggedIn, loading, error } = authState;
+
   const [ present, dismiss ] = useIonToast();
-  const { loggedIn } = useAuth();
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
-  const [ loading, setLoading ] = useState(false);
 
-  const handleLogin = async () => {
-    try{
-      setLoading(true);
-      const credential = await auth.signInWithEmailAndPassword(email, password);
-    }catch(e) {
-      setLoading(false);
-      present({
-        message: e.message,
-        color: "danger",
-        duration: 2000
-      });
-    }
+  const handleLogin = () => {
+    dispatch(auth(email, password));
+  };
+
+  if(Boolean(error)) {
+    present({
+      message: error.message,
+      color: "danger",
+      duration: 2000
+    });
+    dispatch(clearError());
   }
 
   if (loggedIn) {
@@ -80,5 +82,6 @@ const LoginPage: React.FC = () => {
     </IonPage>
   );
 };
+
 
 export default LoginPage;

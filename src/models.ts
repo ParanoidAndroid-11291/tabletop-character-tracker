@@ -1,23 +1,22 @@
+export interface Auth {
+  loggedIn: boolean;
+  userId?: string;
+}
+
 export interface Character {
   id: string;
   name: string;
   gender: string;
   level: number;
   race: string;
-  class: string;
+  playerClass: string;
   alignment: string;
   xp: number;
-}
-
-export interface Stats {
   hit_points: number;
   armor_class: number;
   prof_bonus: number;
   hit_die: string;
   hit_die_mod: number;
-}
-
-export interface AbilityScores {
   str: number;
   dex: number;
   con: number;
@@ -27,13 +26,5 @@ export interface AbilityScores {
 }
 
 export const toCharacter = (doc: any): Character => {
-  return { id: doc.id, ...doc.data() };
-};
-
-export const toStats = (doc: any): Stats => {
-  return {id: doc.id, ...doc.data()};
-};
-
-export const toScores = (doc: any): AbilityScores => {
   return { id: doc.id, ...doc.data() };
 };

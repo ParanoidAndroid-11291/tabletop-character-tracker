@@ -21,14 +21,7 @@ import { useParams } from 'react-router';
 //files
 import { abilityScoreMod } from '../../calculations';
 import { firestore } from '../../firebase';
-import {
-  Character,
-  toCharacter,
-  Stats,
-  toStats,
-  AbilityScores,
-  toScores
-} from '../../models';
+import { Character, toCharacter } from '../../models';
 import { useAuth } from '../../auth';
 //styles
 import './CharacterPage.css';
@@ -39,21 +32,11 @@ const CharacterPage: React.FC = () => {
   };
 
   const [ character, setCharacter ] = useState<Character>();
-  const [ stats, setStats ] = useState<Stats>();
-  const [ ability_scores, setAbilityScores ] = useState<AbilityScores>();
   const { userId } = useAuth();
   useEffect(() => {
     const characterRef = firestore.collection('users').doc(userId)
       .collection('characters').doc(id);
     characterRef.get().then((doc) => setCharacter(toCharacter(doc)));
-
-    const statRef = firestore.collection('users').doc(userId)
-      .collection('characters').doc(id).collection('stats').doc('character_stats');
-    statRef.get().then((doc) => setStats(toStats(doc)));
-
-    const scoreRef = firestore.collection('users').doc(userId)
-      .collection('characters').doc(id).collection('ability_scores').doc('character_ability_scores');
-    scoreRef.get().then((doc) => setAbilityScores(toScores(doc)));
   },[id,userId])
 
   return (
@@ -80,7 +63,7 @@ const CharacterPage: React.FC = () => {
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Class</IonLabel>
-              <span>{character?.class}</span>
+              <span>{character?.playerClass}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Alignment</IonLabel>
@@ -97,23 +80,23 @@ const CharacterPage: React.FC = () => {
           <IonCardContent>
             <IonItem>
               <IonLabel color="tertiary">HP</IonLabel>
-              <span>{stats?.hit_points}</span>
+              <span>{character?.hit_points}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">AC</IonLabel>
-              <span>{stats?.armor_class}</span>
+              <span>{character?.armor_class}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Initiative</IonLabel>
-              <span>{`+${abilityScoreMod(ability_scores?.dex)}`}</span>
+              <span>{`+${abilityScoreMod(character?.dex)}`}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Proficiency Bonus</IonLabel>
-              <span>{`+${stats?.prof_bonus}`}</span>
+              <span>{`+${character?.prof_bonus}`}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Hit Die</IonLabel>
-              <span>{`${stats?.hit_die} + ${stats?.hit_die_mod}`}</span>
+              <span>{`${character?.hit_die} + ${character?.hit_die_mod}`}</span>
             </IonItem>
           </IonCardContent>
         </IonCard>
@@ -125,54 +108,54 @@ const CharacterPage: React.FC = () => {
               <IonText
                 className="mod-text"
                 color="secondary">
-                {abilityScoreMod(ability_scores?.str)}
+                {abilityScoreMod(character?.str)}
               </IonText>
-              <span>{ability_scores?.str}</span>
+              <span>{character?.str}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Dexterity</IonLabel>
               <IonText
                 className="mod-text"
                 color="secondary">
-                {abilityScoreMod(ability_scores?.dex)}
+                {abilityScoreMod(character?.dex)}
               </IonText>
-              <span>{ability_scores?.dex}</span>
+              <span>{character?.dex}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Constitution</IonLabel>
               <IonText
                 className="mod-text"
                 color="secondary">
-                {abilityScoreMod(ability_scores?.con)}
+                {abilityScoreMod(character?.con)}
               </IonText>
-              <span>{ability_scores?.con}</span>
+              <span>{character?.con}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Intelligence</IonLabel>
               <IonText
                 className="mod-text"
                 color="secondary">
-                {abilityScoreMod(ability_scores?.int)}
+                {abilityScoreMod(character?.int)}
               </IonText>
-              <span>{ability_scores?.int}</span>
+              <span>{character?.int}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Wisdom</IonLabel>
               <IonText
                 className="mod-text"
                 color="secondary">
-                {abilityScoreMod(ability_scores?.wis)}
+                {abilityScoreMod(character?.wis)}
               </IonText>
-              <span>{ability_scores?.wis}</span>
+              <span>{character?.wis}</span>
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Charisma</IonLabel>
               <IonText
                 className="mod-text"
                 color="secondary">
-                {abilityScoreMod(ability_scores?.cha)}
+                {abilityScoreMod(character?.cha)}
               </IonText>
-              <span>{ability_scores?.cha}</span>
+              <span>{character?.cha}</span>
             </IonItem>
           </IonCardContent>
         </IonCard>

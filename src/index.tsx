@@ -2,6 +2,8 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -23,9 +25,11 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root'),
   () => {
     SplashScreen.hide();

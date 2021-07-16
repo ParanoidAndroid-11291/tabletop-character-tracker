@@ -20,10 +20,58 @@ import {
 } from '@ionic/react';
 //components
 //files
+import { Character } from '../../models';
 //styles
 
 const AddCharacterPage: React.FC = () => {
-  const [ alignment, setAlignment ] = useState<String>();
+  const [ alignmentOption, setAlignmentOption ] = useState<String>();
+  const [ newCharacter, setNewCharacter ] = useState<Character>();
+  const {
+    id,
+    name,
+    gender,
+    level,
+    race,
+    playerClass,
+    alignment,
+    xp,
+    hit_points,
+    armor_class,
+    prof_bonus,
+    hit_die,
+    hit_die_mod,
+    str,
+    dex,
+    con,
+    int,
+    wis,
+    cha
+  } = newCharacter;
+  const characterData = {
+    id,
+    name,
+    gender,
+    level,
+    race,
+    playerClass,
+    alignment,
+    xp,
+    hit_points,
+    armor_class,
+    prof_bonus,
+    hit_die,
+    hit_die_mod,
+    str,
+    dex,
+    con,
+    int,
+    wis,
+    cha
+  };
+
+  const handleSave = () => {
+    console.log('saved values:');
+  }
 
   return (
     <IonPage>
@@ -43,7 +91,7 @@ const AddCharacterPage: React.FC = () => {
           </IonItemDivider>
           <IonItem>
             <IonLabel position="floating">Name</IonLabel>
-            <IonInput />
+            <IonInput value={name} />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Race</IonLabel>
@@ -55,7 +103,7 @@ const AddCharacterPage: React.FC = () => {
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Alignment</IonLabel>
-            <IonSelect value={alignment} onIonChange={(e) => setAlignment(e.detail.value)}>
+            <IonSelect value={alignmentOption} onIonChange={(e) => setAlignmentOption(e.detail.value)}>
               <IonSelectOption>Lawful Good (LG)</IonSelectOption>
               <IonSelectOption>Neutral Good (NG)</IonSelectOption>
               <IonSelectOption>Chaotic Good (CG)</IonSelectOption>
@@ -133,7 +181,12 @@ const AddCharacterPage: React.FC = () => {
           </IonItem>
         </IonItemGroup>
 
-        <IonButton expand="block" style={{ marginTop: "1rem"}}>Save</IonButton>
+        <IonButton
+          expand="block"
+          style={{ marginTop: "1rem"}}
+          onClick={handleSave}>
+          Save
+        </IonButton>
       </IonContent>
     </IonPage>
   );

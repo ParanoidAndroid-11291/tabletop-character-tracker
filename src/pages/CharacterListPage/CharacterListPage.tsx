@@ -44,7 +44,7 @@ const CharacterListPage: React.FC = () => {
           <IonCard key={character.id} routerLink={`${CHARACTER_LIST_ROUTE}/view/${character.id}`}>
             <IonCardHeader>
               <IonCardTitle>{character.name}</IonCardTitle>
-              <IonCardSubtitle>{`Level ${character.level} ${character.race} ${character.class}`}</IonCardSubtitle>
+              <IonCardSubtitle>{`Level ${character.level} ${character.race} ${character.playerClass}`}</IonCardSubtitle>
             </IonCardHeader>
           </IonCard>
         )}
