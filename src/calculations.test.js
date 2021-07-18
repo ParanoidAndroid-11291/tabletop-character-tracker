@@ -1,4 +1,4 @@
-import { abilityScoreMod, charAdvancement } from './calculations';
+import { abilityScoreMod, charLvlXp } from './calculations';
 
 it('returns ability score modifier', () => {
   const result = abilityScoreMod(22);
@@ -6,11 +6,11 @@ it('returns ability score modifier', () => {
 })
 
 const expected = {
-  level: 6,
-  prof_bonus: 3
+  xp: 48000,
+  prof_bonus: 4
 }
 
-it('calculates level and prof bonus', () => {
-  const result = charAdvancement(14000);
+it('looks up xp and prof bonus', () => {
+  const result = charLvlXp(9);
   expect(result).toMatchObject(expected);
 })

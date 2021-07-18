@@ -1,5 +1,7 @@
 //packages
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks';
 import {
   IonContent,
   IonHeader,
@@ -19,23 +21,26 @@ import {
   IonText
 } from '@ionic/react';
 import { add as addIcon } from 'ionicons/icons';
-import { firestore } from '../../firebase';
-//pages
+//state
+import { getCharacters } from '../../actions/CharacterActions';
+import { Character } from '../../actions/CharacterActionTypes';
 //files
 import { CHARACTER_LIST_ROUTE, ADD_CHARACTER_ROUTE } from '../../routes';
-import { useAuth } from '../../auth';
-import { Character, toCharacter } from '../../models';
 //styles
 import './CharacterListPage.css';
 
 const CharacterListPage: React.FC = () => {
-  const [ characters, setCharacters ] = useState<Character[]>([]);
-  const { userId } = useAuth();
+  const dispatch = useDispatch();
+  const authState = useAppSelector((state) => state.auth);
+  const characterState = useAppSelector((state) => state.character);
+  const { userId } = authState;
+  const { characters } = characterState;
+
   useEffect(() => {
-    const charactersRef = firestore.collection('users').doc(userId)
-      .collection('characters');
-    return charactersRef.limit(10).onSnapshot(({ docs }) => setCharacters(docs.map(toCharacter)));
-  },[userId])
+    if (userId){
+      dispatch(getCharacters(userId));
+    }
+  },[dispatch])
 
   const characterList = (characters: Character[]) => {
     return (

@@ -17,7 +17,7 @@ import {
   useIonToast
 } from '@ionic/react';
 //actions
-import { auth, authChange, clearError } from '../../actions/AuthActions/AuthActions';
+import { auth, clearError } from '../../actions/AuthActions';
 //files
 import { CHARACTER_LIST_ROUTE, REGISTER_ROUTE } from '../../routes';
 import { RootStore } from '../../store';

@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { auth as firebaseAuth } from '../../firebase';
+import { auth as firebaseAuth } from '../firebase';
 import {
   AuthDispatchTypes,
   AUTH_LOADING,
@@ -16,7 +16,8 @@ export const auth = (email: string, password: string) => async ( dispatch: Dispa
     const res = await firebaseAuth.signInWithEmailAndPassword(email, password);
 
     dispatch({
-      type: AUTH_SUCCESS
+      type: AUTH_SUCCESS,
+      payload: res.user.uid
     })
   } catch(e) {
     dispatch({

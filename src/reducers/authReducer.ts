@@ -4,7 +4,7 @@ import {
   AUTH_CHANGE,
   AUTH_FAIL,
   AUTH_LOADING
-} from '../actions/AuthActions/AuthActionTypes';
+} from '../actions/AuthActionTypes';
 
 interface DefaultStateI {
   loading: boolean,
@@ -21,13 +21,15 @@ const defaultState: DefaultStateI = {
 export default (state: DefaultStateI = defaultState, action: AuthDispatchTypes): DefaultStateI => {
   switch(action.type){
     case AUTH_LOADING:
-      console.log('AUTH_LOADING', action);
       return { ...state ,loading: true };
     case AUTH_SUCCESS:
-      console.log('AUTH_SUCCESS', action);
-      return { ...state ,loading: false, loggedIn: true };
+      return {
+        ...state ,
+        loading: false,
+        loggedIn: true,
+        userId: action.payload
+      };
     case AUTH_CHANGE:
-      console.log('AUTH_CHANGE', action);
       return {
         ...state,
         loading: false,
@@ -35,7 +37,6 @@ export default (state: DefaultStateI = defaultState, action: AuthDispatchTypes):
         userId: action.payload.userId
       }
     case AUTH_FAIL:
-      console.log('AUTH_FAIL', action);
       return {
         ...state,
         loading: false,

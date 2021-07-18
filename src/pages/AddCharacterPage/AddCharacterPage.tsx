@@ -1,5 +1,8 @@
 //packages
 import React, { useState } from 'react';
+import { useAppSelector } from '../../hooks';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   IonPage,
   IonHeader,
@@ -9,7 +12,6 @@ import {
   IonButton,
   IonButtons,
   IonBackButton,
-  IonList,
   IonItem,
   IonItemGroup,
   IonItemDivider,
@@ -18,59 +20,52 @@ import {
   IonSelect,
   IonSelectOption
 } from '@ionic/react';
-//components
 //files
-import { Character } from '../../models';
+import { charLvlXp, abilityScoreMod } from '../../calculations';
+//actions
+import { addCharacter } from '../../actions/CharacterActions';
+import { Character } from '../../actions/CharacterActionTypes';
 //styles
 
 const AddCharacterPage: React.FC = () => {
-  const [ alignmentOption, setAlignmentOption ] = useState<String>();
-  const [ newCharacter, setNewCharacter ] = useState<Character>();
-  const {
-    id,
-    name,
-    gender,
-    level,
-    race,
-    playerClass,
-    alignment,
-    xp,
-    hit_points,
-    armor_class,
-    prof_bonus,
-    hit_die,
-    hit_die_mod,
-    str,
-    dex,
-    con,
-    int,
-    wis,
-    cha
-  } = newCharacter;
-  const characterData = {
-    id,
-    name,
-    gender,
-    level,
-    race,
-    playerClass,
-    alignment,
-    xp,
-    hit_points,
-    armor_class,
-    prof_bonus,
-    hit_die,
-    hit_die_mod,
-    str,
-    dex,
-    con,
-    int,
-    wis,
-    cha
-  };
+  const dispatch = useDispatch();
+  const authState = useAppSelector((state) => state.auth);
+  const { userId } = authState;
+
+  const initCharacterData = {
+    name: '',
+    gender: '',
+    level: 0,
+    race: '',
+    playerClass: '',
+    alignment: '',
+    xp: 0,
+    hit_points: 0,
+    armor_class: 0,
+    prof_bonus: 0,
+    hit_die: '',
+    str: 0,
+    dex: 0,
+    con: 0,
+    int: 0,
+    wis: 0,
+    cha: 0
+  }
+
+  const history = useHistory();
+  const [ characterData, setCharacterData ] = useState<Character>(initCharacterData);
 
   const handleSave = () => {
-    console.log('saved values:');
+    dispatch(addCharacter(characterData, userId));
+    console.log('saved values:', characterData);
+    history.goBack();
+  }
+
+  const calcXpProf = (e: CustomEvent) => {
+    const level = parseInt(e.detail.value);
+    const obj = charLvlXp(level);
+    const { xp, prof_bonus } = obj;
+    setCharacterData({ ...characterData, level, xp, prof_bonus });
   }
 
   return (
@@ -91,33 +86,33 @@ const AddCharacterPage: React.FC = () => {
           </IonItemDivider>
           <IonItem>
             <IonLabel position="floating">Name</IonLabel>
-            <IonInput value={name} />
+            <IonInput value={characterData.name} onIonChange={(e) => setCharacterData({ ...characterData ,name: e.detail.value })}/>
+          </IonItem>
+          <IonItem>
+            <IonLabel position="floating">Gender</IonLabel>
+            <IonInput value={characterData.gender} onIonChange={(e) => setCharacterData({ ...characterData ,gender: e.detail.value })}/>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Race</IonLabel>
-            <IonInput />
+            <IonInput value={characterData.race} onIonChange={(e) => setCharacterData({ ...characterData ,race: e.detail.value })}/>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Class</IonLabel>
-            <IonInput />
+            <IonInput value={characterData.playerClass} onIonChange={(e) => setCharacterData({ ...characterData ,playerClass: e.detail.value })}/>
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Alignment</IonLabel>
-            <IonSelect value={alignmentOption} onIonChange={(e) => setAlignmentOption(e.detail.value)}>
-              <IonSelectOption>Lawful Good (LG)</IonSelectOption>
-              <IonSelectOption>Neutral Good (NG)</IonSelectOption>
-              <IonSelectOption>Chaotic Good (CG)</IonSelectOption>
-              <IonSelectOption>Lawful Neutral (LN)</IonSelectOption>
-              <IonSelectOption>True Neutral (TN)</IonSelectOption>
-              <IonSelectOption>Chaotic Neutral (CN)</IonSelectOption>
-              <IonSelectOption>Lawful Evil (LE)</IonSelectOption>
-              <IonSelectOption>Neutral Evil (NE)</IonSelectOption>
-              <IonSelectOption>Chaotic Evil (CE)</IonSelectOption>
+            <IonSelect value={characterData.alignment} onIonChange={(e) => setCharacterData({ ...characterData ,alignment: e.detail.value })}>
+              <IonSelectOption>Lawful Good</IonSelectOption>
+              <IonSelectOption>Neutral Good</IonSelectOption>
+              <IonSelectOption>Chaotic Good</IonSelectOption>
+              <IonSelectOption>Lawful Neutral</IonSelectOption>
+              <IonSelectOption>True Neutral</IonSelectOption>
+              <IonSelectOption>Chaotic Neutral</IonSelectOption>
+              <IonSelectOption>Lawful Evil</IonSelectOption>
+              <IonSelectOption>Neutral Evil</IonSelectOption>
+              <IonSelectOption>Chaotic Evil</IonSelectOption>
             </IonSelect>
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">XP</IonLabel>
-            <IonInput type="number"/>
           </IonItem>
         </IonItemGroup>
 
@@ -126,28 +121,28 @@ const AddCharacterPage: React.FC = () => {
             <IonLabel>Stats</IonLabel>
           </IonItemDivider>
           <IonItem>
+            <IonLabel position="floating">Level</IonLabel>
+            <IonInput
+              type="number"
+              max="20"
+              value={characterData.level}
+              onIonChange={(e) => calcXpProf(e)}
+            />
+          </IonItem>
+          <IonItem>
             <IonLabel position="floating">HP</IonLabel>
-            <IonInput type="number"/>
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">AC</IonLabel>
-            <IonInput type="number"/>
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">Initiative</IonLabel>
-            <IonInput type="number"/>
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">Proficiency Bonus</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              type="number"
+              value={characterData.hit_points}
+              onIonChange={(e) => setCharacterData({ ...characterData, hit_points: parseInt(e.detail.value) })}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Hit Die</IonLabel>
-            <IonInput />
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">Hit Die Mod</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              value={characterData.hit_die}
+              onIonChange={(e) => setCharacterData({ ...characterData, hit_die: e.detail.value})}
+            />
           </IonItem>
         </IonItemGroup>
 
@@ -157,27 +152,59 @@ const AddCharacterPage: React.FC = () => {
           </IonItemDivider>
           <IonItem>
             <IonLabel position="floating">Strength</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              type="number"
+              min="8"
+              value={characterData.str}
+              onIonChange={(e) => setCharacterData({ ...characterData, str: parseInt(e.detail.value) })}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Dexterity</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              type="number"
+              min="8"
+              value={characterData.dex}
+              onIonChange={(e) => {
+                const armor_class = 10 + abilityScoreMod(parseInt(e.detail.value))
+                setCharacterData({ ...characterData, dex: parseInt(e.detail.value), armor_class })
+              }}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Constitution</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              type="number"
+              min="8"
+              value={characterData.con}
+              onIonChange={(e) => setCharacterData({ ...characterData, con: parseInt(e.detail.value) })}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Intelligence</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              type="number"
+              min="8"
+              value={characterData.int}
+              onIonChange={(e) => setCharacterData({ ...characterData, int: parseInt(e.detail.value) })}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Wisdom</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              type="number"
+              min="8"
+              value={characterData.wis}
+              onIonChange={(e) => setCharacterData({ ...characterData, wis: parseInt(e.detail.value) })}
+            />
           </IonItem>
           <IonItem>
             <IonLabel position="floating">Charisma</IonLabel>
-            <IonInput type="number"/>
+            <IonInput
+              type="number"
+              min="8"
+              value={characterData.cha}
+              onIonChange={(e) => setCharacterData({ ...characterData, cha: parseInt(e.detail.value) })}/>
           </IonItem>
         </IonItemGroup>
 

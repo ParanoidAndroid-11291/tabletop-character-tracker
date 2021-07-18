@@ -1,7 +1,7 @@
 //packages
 import { Redirect, Route } from 'react-router-dom';
 import { IonPage, IonRouterOutlet } from '@ionic/react';
-import { connect } from 'react-redux';
+import { useAppSelector } from './hooks';
 //pages
 import CharacterListPage from './pages/CharacterListPage/CharacterListPage';
 import CharacterPage from './pages/CharacterPage/CharacterPage';
@@ -16,15 +16,12 @@ import {
   LOGIN_ROUTE,
   ADD_CHARACTER_ROUTE
 } from './routes';
-import { AuthInit } from './models';
 //styles
 
-interface IProps {
-  auth: AuthInit;
-}
 
-const PrivateRoutes: React.FC<IProps> = ({ auth }) => {
-  const { loggedIn } = auth;
+const PrivateRoutes: React.FC = () => {
+  const authState = useAppSelector((state) => state.auth);
+  const { loggedIn } = authState;
 
   if (!loggedIn) {
     return <Redirect to={ LOGIN_ROUTE } />
@@ -53,10 +50,5 @@ const PrivateRoutes: React.FC<IProps> = ({ auth }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    auth: state.auth as AuthInit
-  }
-};
 
-export default connect(mapStateToProps)(PrivateRoutes);
+export default PrivateRoutes;

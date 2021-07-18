@@ -1,7 +1,3 @@
-export interface Auth {
-  loggedIn: boolean;
-  userId?: string;
-}
 
 export interface Character {
   id: string;

@@ -1,5 +1,7 @@
 //packages
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks';
 import {
   IonPage,
   IonHeader,
@@ -17,27 +19,29 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { useParams } from 'react-router';
-//pages
+//state
+import { getCharacter } from '../../actions/CharacterActions';
 //files
 import { abilityScoreMod } from '../../calculations';
-import { firestore } from '../../firebase';
-import { Character, toCharacter } from '../../models';
-import { useAuth } from '../../auth';
 //styles
 import './CharacterPage.css';
 
 const CharacterPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const authState = useAppSelector((state) => state.auth);
+  const charState = useAppSelector((state) => state.character );
+  const { userId } = authState;
+  const { character, unsub } = charState;
+
   const { id } = useParams() as {
     id: string
   };
 
-  const [ character, setCharacter ] = useState<Character>();
-  const { userId } = useAuth();
   useEffect(() => {
-    const characterRef = firestore.collection('users').doc(userId)
-      .collection('characters').doc(id);
-    characterRef.get().then((doc) => setCharacter(toCharacter(doc)));
-  },[id,userId])
+    dispatch(getCharacter(userId, id));
+    return () => unsub;
+
+  },[dispatch]);
 
   return (
     <IonPage>
@@ -96,7 +100,7 @@ const CharacterPage: React.FC = () => {
             </IonItem>
             <IonItem>
               <IonLabel color="tertiary">Hit Die</IonLabel>
-              <span>{`${character?.hit_die} + ${character?.hit_die_mod}`}</span>
+              <span>{`${character?.hit_die} + ${character?.level}`}</span>
             </IonItem>
           </IonCardContent>
         </IonCard>

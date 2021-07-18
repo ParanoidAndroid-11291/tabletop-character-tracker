@@ -19,6 +19,7 @@ export interface AuthFail {
 
 export interface AuthSuccess {
   type: typeof AUTH_SUCCESS
+  payload: string;
 }
 
 export interface AuthChange {
