@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
+import { useHistory } from 'react-router-dom';
 import {
   IonPage,
   IonHeader,
@@ -15,23 +16,46 @@ import {
   IonCardContent,
   IonLabel,
   IonItem,
-  IonText
+  IonText,
+  IonIcon,
+  IonButton,
+  useIonModal
 } from '@ionic/react';
+import { closeCircleOutline } from 'ionicons/icons';
 import React from 'react';
 import { useParams } from 'react-router';
 //state
-import { getCharacter } from '../../actions/CharacterActions';
+import { getCharacter, deleteCharacter } from '../../actions/CharacterActions';
 //files
 import { abilityScoreMod } from '../../calculations';
+//components
+import DecisionModal from '../../components/DecisionModal';
 //styles
 import './CharacterPage.css';
 
 const CharacterPage: React.FC = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const authState = useAppSelector((state) => state.auth);
   const charState = useAppSelector((state) => state.character );
   const { userId } = authState;
   const { character, unsub } = charState;
+
+  const handleDelete = () => {
+    dismiss();
+    dispatch(deleteCharacter(userId, character.id));
+    history.goBack();
+  };
+  const handleCancelDelete = () => dismiss();
+
+  const [ present, dismiss ] = useIonModal(DecisionModal, {
+    title: "Delete Character",
+    content: "Are you sure you want to delete this character?",
+    posBtnLabel: "Yes",
+    negBtnLabel: "No",
+    onPositiveSelect: handleDelete,
+    onNegativeSelect: handleCancelDelete
+  })
 
   const { id } = useParams() as {
     id: string
@@ -39,8 +63,8 @@ const CharacterPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCharacter(userId, id));
-    return () => unsub;
 
+    return unsub;
   },[dispatch]);
 
   return (
@@ -49,6 +73,11 @@ const CharacterPage: React.FC = () => {
         <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton/>
+          </IonButtons>
+          <IonButtons onClick={() => present()} slot="end">
+            <IonButton color="danger">
+              <IonIcon icon={closeCircleOutline} slot="icon-only"/>
+            </IonButton>
           </IonButtons>
           <IonTitle>{character?.name}</IonTitle>
         </IonToolbar>

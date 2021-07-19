@@ -3,14 +3,15 @@ import {
   Character,
   CHARACTER_GET,
   CHARACTER_LIST_GET,
-  CHARACTER_ADD,
-  CHARACTER_DELETE
+  STATE_RESET,
+  CHARACTER_LOADING
 } from '../actions/CharacterActionTypes';
 
 interface DefaultStateI {
   character: Character,
   characters: Character[],
-  unsub?: void
+  isLoading: boolean,
+  unsub?: () => void
 }
 
 const defaultState: DefaultStateI = {
@@ -34,7 +35,8 @@ const defaultState: DefaultStateI = {
     wis: 0,
     cha: 0
   },
-  characters: []
+  characters: [],
+  isLoading: false
 }
 
 export default ( state: DefaultStateI = defaultState, action: CharacterDispatchTypes): DefaultStateI => {
@@ -43,6 +45,10 @@ export default ( state: DefaultStateI = defaultState, action: CharacterDispatchT
       return { ...state, characters: action.payload.characters, unsub: action.payload.unsub };
     case CHARACTER_GET:
       return { ...state, character: action.payload };
+    case STATE_RESET:
+      return { ...state, character: defaultState.character, characters: defaultState.characters };
+    case CHARACTER_LOADING:
+      return { ...state, isLoading: action.payload };
     default:
       return state;
   }

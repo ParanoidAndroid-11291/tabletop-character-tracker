@@ -18,7 +18,8 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
-  IonText
+  IonText,
+  IonLoading
 } from '@ionic/react';
 import { add as addIcon } from 'ionicons/icons';
 //state
@@ -34,7 +35,7 @@ const CharacterListPage: React.FC = () => {
   const authState = useAppSelector((state) => state.auth);
   const characterState = useAppSelector((state) => state.character);
   const { userId } = authState;
-  const { characters } = characterState;
+  const { characters, isLoading } = characterState;
 
   useEffect(() => {
     if (userId){
@@ -79,6 +80,7 @@ const CharacterListPage: React.FC = () => {
             <IonIcon icon={addIcon} />
           </IonFabButton>
         </IonFab>
+        <IonLoading isOpen={isLoading} />
       </IonContent>
     </IonPage>
   );
