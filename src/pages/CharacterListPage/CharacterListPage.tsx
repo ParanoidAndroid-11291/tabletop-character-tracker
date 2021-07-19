@@ -1,7 +1,8 @@
 //packages
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
+import { firestore } from '../../firebase';
 import {
   IonContent,
   IonHeader,
@@ -31,16 +32,25 @@ import { CHARACTER_LIST_ROUTE, ADD_CHARACTER_ROUTE } from '../../routes';
 import './CharacterListPage.css';
 
 const CharacterListPage: React.FC = () => {
+  const [ isLoading, setIsLoading ] = useState(false);
   const dispatch = useDispatch();
   const authState = useAppSelector((state) => state.auth);
   const characterState = useAppSelector((state) => state.character);
   const { userId } = authState;
-  const { characters, isLoading } = characterState;
+  const { characters } = characterState;
 
   useEffect(() => {
-    if (userId){
-      dispatch(getCharacters(userId));
-    }
+    setIsLoading(true);
+    const charactersRef = firestore.collection('users').doc(userId)
+      .collection('characters');
+    return charactersRef.limit(10).onSnapshot(({ docs }) => {
+    const flatCharList = docs.map((doc) => ({ id: doc.id, ...doc.data() } as Character ));
+    dispatch(getCharacters(flatCharList));
+    setIsLoading(false);
+    }, (error) => {
+      console.log(error)
+      setIsLoading(false);
+    });
   },[dispatch])
 
   const characterList = (characters: Character[]) => {

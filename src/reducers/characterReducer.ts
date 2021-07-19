@@ -3,14 +3,12 @@ import {
   Character,
   CHARACTER_GET,
   CHARACTER_LIST_GET,
-  STATE_RESET,
-  CHARACTER_LOADING
+  STATE_RESET
 } from '../actions/CharacterActionTypes';
 
 interface DefaultStateI {
   character: Character,
   characters: Character[],
-  isLoading: boolean,
   unsub?: () => void
 }
 
@@ -35,20 +33,17 @@ const defaultState: DefaultStateI = {
     wis: 0,
     cha: 0
   },
-  characters: [],
-  isLoading: false
+  characters: []
 }
 
 export default ( state: DefaultStateI = defaultState, action: CharacterDispatchTypes): DefaultStateI => {
   switch(action.type) {
     case CHARACTER_LIST_GET:
-      return { ...state, characters: action.payload.characters, unsub: action.payload.unsub };
+      return { ...state, characters: action.payload };
     case CHARACTER_GET:
       return { ...state, character: action.payload };
     case STATE_RESET:
       return { ...state, character: defaultState.character, characters: defaultState.characters };
-    case CHARACTER_LOADING:
-      return { ...state, isLoading: action.payload };
     default:
       return state;
   }

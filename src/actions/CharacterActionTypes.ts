@@ -2,7 +2,6 @@ export const CHARACTER_GET = "CHARACTER_GET";
 export const CHARACTER_LIST_GET = "CHARACTER_LIST_GET";
 export const CHARACTER_ADD = "CHARACTER_ADD";
 export const CHARACTER_DELETE = "CHARACTER_DELETE";
-export const CHARACTER_LOADING = "CHARACTER_LOADING";
 export const STATE_RESET = "STATE_RESET";
 
 export type Character = {
@@ -26,11 +25,6 @@ export type Character = {
   cha: number;
 }
 
-type CharacterSnapshot = {
-  characters: Character[],
-  unsub: () => void;
-}
-
 export interface CharacterGet {
   type: typeof CHARACTER_GET;
   payload: Character;
@@ -38,7 +32,7 @@ export interface CharacterGet {
 
 export interface CharacterListGet {
   type: typeof CHARACTER_LIST_GET;
-  payload: CharacterSnapshot;
+  payload: Character[];
 }
 
 export interface CharacterAdd {
@@ -47,11 +41,6 @@ export interface CharacterAdd {
 
 export interface CharacterDelete {
   type: typeof CHARACTER_DELETE;
-}
-
-export interface CharacterLoading {
-  type: typeof CHARACTER_LOADING;
-  payload: boolean;
 }
 
 export interface StateReset {
@@ -63,5 +52,4 @@ export type CharacterDispatchTypes =
                                   CharacterListGet |
                                   CharacterAdd |
                                   CharacterDelete |
-                                  CharacterLoading |
                                   StateReset
