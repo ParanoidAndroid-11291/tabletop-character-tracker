@@ -2,5 +2,8 @@
 	"appId": "com.chager.tabletop-character-tracker",
 	"appName": "Tabletop Character Tracker",
 	"webDir": "build",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"server": {
+		"url": "http://192.168.1.239:8100"
+	}
 }

@@ -36,11 +36,11 @@ export interface CharacterListGet {
 }
 
 export interface CharacterAdd {
-  type: typeof CHARACTER_ADD;
+  type: typeof CHARACTER_ADD
 }
 
 export interface CharacterDelete {
-  type: typeof CHARACTER_DELETE;
+  type: typeof CHARACTER_DELETE
 }
 
 export interface StateReset {

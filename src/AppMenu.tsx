@@ -14,7 +14,7 @@ import {
 //pages
 
 //files
-import { SETTINGS_ROUTE } from './routes';
+import { SETTINGS_ROUTE, RESOURCE_MENU_ROUTE } from './routes';
 //styles
 
 const AppMenu: React.FC = () => (
@@ -32,6 +32,12 @@ const AppMenu: React.FC = () => (
               routerLink={ SETTINGS_ROUTE }
               >
                 <IonLabel>Settings</IonLabel>
+            </IonItem>
+            <IonItem
+              button
+              routerLink={ RESOURCE_MENU_ROUTE }
+              >
+                <IonLabel>Resources</IonLabel>
             </IonItem>
         </IonMenuToggle>
         </IonList>

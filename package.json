@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "ionic serve",
-    "build": "ionic build",
+    "android": "ionic cap run android --external --livereload",
+    "build:android": "ionic cap build android",
     "test": "react-scripts test"
   },
   "dependencies": {
