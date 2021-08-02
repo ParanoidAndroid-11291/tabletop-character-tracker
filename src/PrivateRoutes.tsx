@@ -11,6 +11,8 @@ import ResourceMenuPage from './pages/ResourceMenuPage/ResourceMenuPage';
 import ResourceEndpointPage from './pages/ResourceEndpointPage/ResourceEndpointPage';
 import AbilityScoreIndexPage from './pages/ResourceIndexPages/AbilityScoreIndexPage';
 import SkillIndexPage from './pages/ResourceIndexPages/SkillIndexPage';
+import ProficiencyIndexPage from './pages/ResourceIndexPages/ProficiencyIndexPage';
+import LanguagesIndexPage from './pages/ResourceIndexPages/LanguagesIndexPage';
 import AppMenu from './AppMenu';
 //files
 import {
@@ -22,7 +24,9 @@ import {
   RESOURCE_MENU_ROUTE,
   RESOURCE_ENDPOINT_ROUTE,
   ABILITY_SCORE_INDEX_ROUTE,
-  SKILLS_INDEX_ROUTE
+  SKILLS_INDEX_ROUTE,
+  PROFICIENCIES_INDEX_ROUTE,
+  LANGUAGES_INDEX_ROUTE
 } from './routes';
 //styles
 
@@ -63,6 +67,12 @@ const PrivateRoutes: React.FC = () => {
           </Route>
           <Route exact path={ SKILLS_INDEX_ROUTE }>
             <SkillIndexPage />
+          </Route>
+          <Route exact path={ PROFICIENCIES_INDEX_ROUTE }>
+            <ProficiencyIndexPage />
+          </Route>
+          <Route exact path={ LANGUAGES_INDEX_ROUTE }>
+            <LanguagesIndexPage />
           </Route>
         </IonRouterOutlet>
       </IonPage>

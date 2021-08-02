@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { RESOURCE_MENU_ROUTE } from '../../routes';
 import { setResourceUrl } from '../../actions/ResourceActions';
-import { AbilityScore } from '../../actions/ResourceActionTypes';
+import { AbilityScore, ApiReference } from '../../actions/ResourceActionTypes';
 import {
   IonPage,
   IonHeader,
@@ -17,45 +17,42 @@ import {
   IonText,
   IonButtons,
   IonBackButton,
-  IonLoading
+  IonLoading,
+  IonIcon
 } from '@ionic/react';
+import { chevronForwardOutline } from 'ionicons/icons';
 
 import { getResource } from '../../actions/ResourceActions';
 
 const AbilityScoreIndexPage: React.FC = () => {
+  console.log('AbilityScoreIndexPage rendered');
   const dispatch = useDispatch();
   const resourceState = useAppSelector((state) => state.resource)
   const { url, character_resources } = resourceState;
-  const [ ability_score, setAbilityScore ] = useState<AbilityScore>({
-    index: '',
-    name: '',
-    full_name: '',
-    desc: [],
-    skills: [],
-    url: ''
-  });
+  const [ ability_score, setAbilityScore ] = useState<AbilityScore>();
 
   useEffect(() => {
     dispatch(getResource('ability-scores', url));
   },[dispatch]);
 
   useEffect(() => {
-    if (Boolean(character_resources)) {
-      const { ability_score } = character_resources;
+    const { ability_score } = character_resources;
+    if (Boolean(ability_score)) {
       setAbilityScore(ability_score);
     }
   },[character_resources, ability_score]);
 
-  const skillList = () => {
-    const { skills } = ability_score;
+  const skillList = (skills: ApiReference[]) => {
     return (
       <IonList>
         {skills.map((skill) =>
           <IonItem
             key={skill.index}
             routerLink={`${RESOURCE_MENU_ROUTE}/view/skills/${skill.index}`}
+            routerDirection="back"
             onClick={() => dispatch(setResourceUrl(skill.url))}>
             <IonLabel>{skill.name}</IonLabel>
+            <IonIcon icon={ chevronForwardOutline } />
           </IonItem>
         )}
       </IonList>
@@ -66,29 +63,33 @@ const AbilityScoreIndexPage: React.FC = () => {
     return <IonLoading isOpen={true} />
   }
 
+  const { full_name, desc, skills } = ability_score;
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton />
+            <IonBackButton defaultHref={RESOURCE_MENU_ROUTE}/>
           </IonButtons>
-          <IonTitle>{ability_score.full_name}</IonTitle>
+          <IonTitle>{full_name}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className='ion-padding'>
         <IonText color="secondary">
           <h3>Description</h3>
         </IonText>
-        <p>{ability_score.desc[0]}</p>
+        <p>{desc[0]}</p>
         <IonText color="secondary">
           <h3>Ability Check</h3>
         </IonText>
-        <p>{ability_score.desc[1]}</p>
+        <p>{desc[1]}</p>
         <IonListHeader>
           <IonLabel>Skills</IonLabel>
         </IonListHeader>
-        {skillList()}
+        { skills.length > 0 ?
+          skillList(skills) :
+          null
+        }
       </IonContent>
     </IonPage>
   );

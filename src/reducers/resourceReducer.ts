@@ -12,7 +12,11 @@ import {
   Rule,
   RuleSection,
   GET_RESOURCE_LIST,
-  GET_CHARACTER_RESOURCES,
+  GET_ABILITY_SCORE,
+  GET_SKILL,
+  GET_LANGUAGE,
+  GET_ALIGNMENT,
+  GET_PROFICIENCY,
   GET_BACKGROUNDS,
   GET_CLASS_RESOURCES,
   GET_RACE_RESOURCES,
@@ -28,7 +32,7 @@ import {
 interface DefaultStateI {
   url: string,
   resourceList: ApiReference[];
-  character_resources?: CharacterResources;
+  character_resources: CharacterResources;
   background?: Background;
   class_resources?: ClassResources;
   race_resources?: RaceResources;
@@ -42,15 +46,35 @@ interface DefaultStateI {
 
 const defaultState: DefaultStateI = {
   url: '',
-  resourceList: []
+  resourceList: [],
+  character_resources: {}
 }
 
 export default ( state: DefaultStateI = defaultState, action: ResourceDispatchTypes): DefaultStateI => {
+
   switch(action.type) {
     case GET_RESOURCE_LIST:
       return { ...state, resourceList: action.payload }
-    case GET_CHARACTER_RESOURCES:
-      return { ...state, character_resources: action.payload }
+    case GET_ABILITY_SCORE:
+      return { ...state, character_resources: {
+        ...state.character_resources ,ability_score: action.payload
+      }}
+    case GET_SKILL:
+      return { ...state, character_resources: {
+        ...state.character_resources ,skill: action.payload
+      }}
+    case GET_LANGUAGE:
+      return { ...state, character_resources: {
+        ...state.character_resources ,language: action.payload
+      }}
+    case GET_ALIGNMENT:
+      return { ...state, character_resources: {
+        ...state.character_resources ,alignment: action.payload
+      }}
+    case GET_PROFICIENCY:
+      return { ...state, character_resources: {
+        ...state.character_resources ,proficiency: action.payload
+      }}
     case GET_BACKGROUNDS:
       return { ...state, background: action.payload }
     case GET_CLASS_RESOURCES:

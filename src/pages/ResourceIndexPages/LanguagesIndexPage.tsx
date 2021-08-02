@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { RESOURCE_MENU_ROUTE } from '../../routes';
-import { setResourceUrl } from '../../actions/ResourceActions';
-import { Skill } from '../../actions/ResourceActionTypes';
+import { Language } from '../../actions/ResourceActionTypes';
 import {
   IonPage,
   IonHeader,
@@ -11,38 +10,38 @@ import {
   IonTitle,
   IonContent,
   IonItem,
+  IonList,
+  IonLabel,
   IonText,
-  IonIcon,
   IonButtons,
   IonBackButton,
   IonLoading
 } from '@ionic/react';
-import { chevronForwardOutline } from 'ionicons/icons';
 
 import { getResource } from '../../actions/ResourceActions';
 
-const SkillIndexPage: React.FC = () => {
+const LanguagesIndexPage: React.FC = () => {
   const dispatch = useDispatch();
   const resourceState = useAppSelector((state) => state.resource)
   const { url, character_resources } = resourceState;
-  const [ skill, setSkill ] = useState<Skill>();
+  const [ language, setLanguage ] = useState<Language>();
 
   useEffect(() => {
-    dispatch(getResource('skills', url));
+    dispatch(getResource('languages', url));
   },[dispatch]);
 
   useEffect(() => {
-    const { skill } = character_resources;
-    if (Boolean(skill)) {
-      setSkill(skill);
+    const { language } = character_resources;
+    if (Boolean(language)) {
+      setLanguage(language);
     }
-  },[character_resources, skill]);
+  },[character_resources, language]);
 
-  if (!Boolean(skill)) {
+  if (!Boolean(language)) {
     return <IonLoading isOpen={true} />
   }
 
-  const { ability_score } = skill;
+  const { name, type, typical_speakers, script } = language;
   return (
     <IonPage>
       <IonHeader>
@@ -50,27 +49,31 @@ const SkillIndexPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref={RESOURCE_MENU_ROUTE}/>
           </IonButtons>
-          <IonTitle>{skill?.name}</IonTitle>
+          <IonTitle>{name}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className='ion-padding'>
         <IonText color="secondary">
-          <h3>Description</h3>
+          <h3>Type</h3>
         </IonText>
-        <p>{skill?.desc[0]}</p>
+        <p>{type}</p>
         <IonText color="secondary">
-          <h3>Related Ability Score</h3>
+          <h3>Script</h3>
         </IonText>
-        <IonItem
-          routerLink={`${RESOURCE_MENU_ROUTE}/view/ability-scores/${ability_score?.index}`}
-          routerDirection="back"
-          onClick={() => dispatch(setResourceUrl(ability_score?.url))}>
-          {ability_score?.name}
-        </IonItem>
-        <IonIcon icon={ chevronForwardOutline } />
+        <p>{script}</p>
+        <IonText color="secondary">
+          <h3>Typical Speakers</h3>
+        </IonText>
+        <IonList>
+          { typical_speakers.map((speaker) =>
+            <IonItem key={speaker}>
+              <IonLabel>{speaker}</IonLabel>
+            </IonItem>
+          )}
+        </IonList>
       </IonContent>
     </IonPage>
   );
 }
 
-export default SkillIndexPage;
+export default LanguagesIndexPage;

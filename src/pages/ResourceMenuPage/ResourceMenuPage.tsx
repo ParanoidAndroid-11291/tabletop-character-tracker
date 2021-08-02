@@ -14,7 +14,7 @@ import {
   IonLabel,
   IonIcon
 } from '@ionic/react';
-import { RESOURCE_MENU_ROUTE } from '../../routes';
+import { RESOURCE_MENU_ROUTE, CHARACTER_LIST_ROUTE } from '../../routes';
 //actions
 
 const SettingsPage: React.FC = () => {
@@ -24,7 +24,7 @@ const SettingsPage: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton/>
+            <IonBackButton defaultHref={ CHARACTER_LIST_ROUTE }/>
           </IonButtons>
           <IonTitle>Reference</IonTitle>
         </IonToolbar>

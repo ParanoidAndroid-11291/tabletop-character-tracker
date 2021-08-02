@@ -1,7 +1,11 @@
 /****************************************************************
 *                       Character Data                          *
 ****************************************************************/
-export const GET_CHARACTER_RESOURCES = "GET_CHARACTER_RESOURCES";
+export const GET_ABILITY_SCORE = "GET_ABILITY_SCORE";
+export const GET_SKILL = "GET_SKILL";
+export const GET_PROFICIENCY = "GET_PROFICIENCY";
+export const GET_LANGUAGE = "GET_LANGUAGE";
+export const GET_ALIGNMENT = "GET_ALIGNMENT";
 
 export type AbilityScore = {
   index: string;
@@ -55,9 +59,29 @@ export type CharacterResources = {
   alignment?: Alignment;
 }
 
-export interface CharacterResourcesGet {
-  type: typeof GET_CHARACTER_RESOURCES;
-  payload: CharacterResources;
+export interface AbilityScoreGet {
+  type: typeof GET_ABILITY_SCORE;
+  payload: AbilityScore;
+}
+
+export interface SkillGet {
+  type: typeof GET_SKILL;
+  payload: Skill;
+}
+
+export interface ProficiencyGet {
+  type: typeof GET_PROFICIENCY;
+  payload: Proficiency;
+}
+
+export interface LanguageGet {
+  type: typeof GET_LANGUAGE;
+  payload: Language;
+}
+
+export interface AlignmentGet {
+  type: typeof GET_ALIGNMENT;
+  payload: Alignment;
 }
 
 /****************************************************************
@@ -497,7 +521,11 @@ export interface ResourceUrlSet {
 
 /***************************** DISPATCH TYPES *****************************/
 export type ResourceDispatchTypes =
-                        CharacterResourcesGet |
+                        AbilityScoreGet |
+                        SkillGet |
+                        AlignmentGet |
+                        LanguageGet |
+                        ProficiencyGet |
                         BackgroundGet |
                         ClassResourcesGet |
                         RaceResourcesGet |

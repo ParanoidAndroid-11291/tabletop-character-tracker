@@ -59,7 +59,7 @@ const ResourceEndpointPage: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton />
+            <IonBackButton defaultHref={ RESOURCE_MENU_ROUTE }/>
           </IonButtons>
           <IonTitle>{capitalizeTitle(endpoint)}</IonTitle>
         </IonToolbar>

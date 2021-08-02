@@ -3,7 +3,11 @@ import dndapi from '../apis/dndapi';
 import {
   ResourceDispatchTypes,
   GET_RESOURCE_LIST,
-  GET_CHARACTER_RESOURCES,
+  GET_ABILITY_SCORE,
+  GET_SKILL,
+  GET_LANGUAGE,
+  GET_ALIGNMENT,
+  GET_PROFICIENCY,
   GET_BACKGROUNDS,
   GET_CLASS_RESOURCES,
   GET_RACE_RESOURCES,
@@ -38,39 +42,34 @@ export const getResource = (endpoint: string, url: string) => async (dispatch: D
     switch (endpoint){
       case 'ability-scores':
         dispatch({
-          type: GET_CHARACTER_RESOURCES,
-          payload: {
-            ability_score: res.data
-          } })
+          type: GET_ABILITY_SCORE,
+          payload: res.data
+        })
         break;
       case 'skills':
         dispatch({
-          type: GET_CHARACTER_RESOURCES,
-          payload: {
-            skill: res.data
-          } })
+          type: GET_SKILL,
+          payload: res.data
+        })
           break;
       case 'proficiencies':
         dispatch({
-          type: GET_CHARACTER_RESOURCES,
-          payload: {
-            proficiency: res.data
-          } })
+          type: GET_PROFICIENCY,
+          payload: res.data
+        })
           break;
       case 'languages':
         dispatch({
-          type: GET_CHARACTER_RESOURCES,
-          payload: {
-            language: res.data
-          } })
+          type: GET_LANGUAGE,
+          payload: res.data
+        })
           break;
         case 'alignment':
           dispatch({
-            type: GET_CHARACTER_RESOURCES,
-            payload: {
-              alignment: res.data
-            } })
-            break;
+            type: GET_ALIGNMENT,
+            payload: res.data
+        })
+          break;
         case 'backgrounds':
           dispatch({
             type: GET_BACKGROUNDS,
