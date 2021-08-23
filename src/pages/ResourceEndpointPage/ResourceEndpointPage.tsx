@@ -47,7 +47,7 @@ const ResourceEndpointPage: React.FC = () => {
             key={resource.index}
             routerLink={`${RESOURCE_MENU_ROUTE}/view/${endpoint}/${resource.index}`}
             onClick={() => dispatch(setResourceUrl(resource.url))}>
-            <IonLabel>{resource.name}</IonLabel>
+            <IonLabel color="primary">{resource.name}</IonLabel>
           </IonItem>
         )}
       </IonList>

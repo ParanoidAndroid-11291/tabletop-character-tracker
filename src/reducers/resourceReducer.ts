@@ -34,7 +34,7 @@ interface DefaultStateI {
   resourceList: ApiReference[];
   character_resources: CharacterResources;
   background?: Background;
-  class_resources?: ClassResources;
+  class_resources: ClassResources;
   race_resources?: RaceResources;
   equipment_resources?: EquipmentResources;
   equipment_category?: EquipmentCategory;
@@ -47,7 +47,8 @@ interface DefaultStateI {
 const defaultState: DefaultStateI = {
   url: '',
   resourceList: [],
-  character_resources: {}
+  character_resources: {},
+  class_resources: {}
 }
 
 export default ( state: DefaultStateI = defaultState, action: ResourceDispatchTypes): DefaultStateI => {

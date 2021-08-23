@@ -12,7 +12,6 @@ import {
   IonContent,
   IonList,
   IonLabel,
-  IonIcon,
   IonListHeader,
   IonItem,
   IonText,
@@ -20,7 +19,6 @@ import {
   IonBackButton,
   IonLoading
 } from '@ionic/react';
-import { chevronForwardOutline } from 'ionicons/icons';
 
 import { getResource } from '../../actions/ResourceActions';
 
@@ -46,16 +44,16 @@ const ProficiencyIndexPage: React.FC = () => {
   }
 
   const itemsList = (items: ApiReference[], endpoint: string) => {
+
     return (
       <IonList>
         {items.map((item) =>
           <IonItem
             key={item.index}
-            routerLink={`${RESOURCE_MENU_ROUTE}/view/${endpoint}/${item.index}`}
+            routerLink={`${RESOURCE_MENU_ROUTE}/view/${ item.type ? item.type : endpoint}/${item.index}`}
             routerDirection="back"
             onClick={() => dispatch(setResourceUrl(item.url))}>
-            <IonLabel>{item.name}</IonLabel>
-            <IonIcon icon={ chevronForwardOutline } />
+            <IonLabel color="primary">{item.name}</IonLabel>
           </IonItem>
         )}
       </IonList>
@@ -83,7 +81,7 @@ const ProficiencyIndexPage: React.FC = () => {
         </IonListHeader>
         { classes?.length > 0 ?
           itemsList(classes, 'classes') :
-          <IonText>None</IonText>
+          null
         }
         <IonListHeader>
           <IonLabel>Races</IonLabel>
@@ -96,7 +94,7 @@ const ProficiencyIndexPage: React.FC = () => {
           <IonLabel>References</IonLabel>
         </IonListHeader>
         { references?.length > 0 ?
-          itemsList(references, 'equipment-categories') :
+          itemsList(references, "equipment") :
           null
         }
       </IonContent>

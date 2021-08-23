@@ -1,6 +1,5 @@
 //packages
 import React from 'react';
-import { chevronForwardOutline } from 'ionicons/icons';
 import {
   IonPage,
   IonHeader,
@@ -12,7 +11,6 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonIcon
 } from '@ionic/react';
 import { RESOURCE_MENU_ROUTE, CHARACTER_LIST_ROUTE } from '../../routes';
 //actions
@@ -32,60 +30,46 @@ const SettingsPage: React.FC = () => {
       <IonContent className="ion-padding">
         <IonList>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/ability-scores`}>
-            <IonLabel>Ability Scores</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Ability Scores</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/skills`}>
-            <IonLabel>Skills</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Skills</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/proficiencies`}>
-            <IonLabel>Proficiencies</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Proficiencies</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/languages`}>
-            <IonLabel>Languages</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Languages</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/alignments`}>
-            <IonLabel>Alignments</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Alignments</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/backgrounds`}>
-            <IonLabel>Backgrounds</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Backgrounds</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/classes`}>
-            <IonLabel>Classes</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Classes</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/races`}>
-            <IonLabel>Races</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Races</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/equipment-categories`}>
-            <IonLabel>Equipment</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Equipment</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/spells`}>
-            <IonLabel>Spells</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Spells</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/conditions`}>
-            <IonLabel>Conditions</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Conditions</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/damage-types`}>
-            <IonLabel>Damage Types</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Damage Types</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/magic-schools`}>
-            <IonLabel>Magic Schools</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Magic Schools</IonLabel>
           </IonItem>
           <IonItem routerLink={`${RESOURCE_MENU_ROUTE}/view/rules`}>
-            <IonLabel>Rules</IonLabel>
-            <IonIcon icon={chevronForwardOutline} />
+            <IonLabel color="primary">Rules</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

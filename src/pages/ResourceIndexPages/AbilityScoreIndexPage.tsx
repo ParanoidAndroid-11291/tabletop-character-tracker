@@ -17,10 +17,8 @@ import {
   IonText,
   IonButtons,
   IonBackButton,
-  IonLoading,
-  IonIcon
+  IonLoading
 } from '@ionic/react';
-import { chevronForwardOutline } from 'ionicons/icons';
 
 import { getResource } from '../../actions/ResourceActions';
 
@@ -51,8 +49,7 @@ const AbilityScoreIndexPage: React.FC = () => {
             routerLink={`${RESOURCE_MENU_ROUTE}/view/skills/${skill.index}`}
             routerDirection="back"
             onClick={() => dispatch(setResourceUrl(skill.url))}>
-            <IonLabel>{skill.name}</IonLabel>
-            <IonIcon icon={ chevronForwardOutline } />
+            <IonLabel color="primary">{skill.name}</IonLabel>
           </IonItem>
         )}
       </IonList>

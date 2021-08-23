@@ -94,12 +94,22 @@ type BackgroundFeature = {
   name: string;
 }
 
+export type StartingEquipment = {
+  equipment: ApiReference;
+  quantity: number;
+}
+
+export type Ideal = {
+  desc: string;
+  alignments: Alignment[];
+}
+
 export type Background = {
   index: string;
   name: string;
-  starting_proficiencies: Proficiency[];
-  language_options: Choice[];
-  starting_equipment: ApiReference[];
+  starting_proficiencies: ApiReference[];
+  language_options: Choice;
+  starting_equipment: StartingEquipment[];
   starting_equipment_options: Choice[];
   feature:  BackgroundFeature;
   personality_traits: Choice;
@@ -483,6 +493,7 @@ export const SET_RESOURCE_URL = "SET_RESOURCE_URL";
 
 export type ApiReference = {
   index?: string;
+  type?: string;
   name: string;
   url: string;
 }
@@ -496,7 +507,7 @@ export type ClassApiResource = {
 export type Choice = {
   choose: number;
   type: string;
-  from: any;
+  from: [];
 }
 
 export type Cost = {
