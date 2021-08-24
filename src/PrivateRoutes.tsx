@@ -4,7 +4,7 @@ import { IonPage, IonRouterOutlet } from '@ionic/react';
 import { useAppSelector } from './hooks';
 //pages
 import CharacterListPage from './pages/CharacterListPage/CharacterListPage';
-import CharacterPage from './pages/CharacterPage/CharacterPage';
+import CharacterPageTabs from './pages/CharacterPageTabs';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import AddCharacterPage from './pages/AddCharacterPage/AddCharacterPage';
 import ResourceMenuPage from './pages/ResourceMenuPage/ResourceMenuPage';
@@ -19,7 +19,7 @@ import AppMenu from './AppMenu';
 //files
 import {
   CHARACTER_LIST_ROUTE,
-  CHARACTER_ROUTE,
+  CHARACTER_TABS_ROUTE,
   SETTINGS_ROUTE,
   LOGIN_ROUTE,
   ADD_CHARACTER_ROUTE,
@@ -51,8 +51,8 @@ const PrivateRoutes: React.FC = () => {
           <Route exact path={ CHARACTER_LIST_ROUTE }>
             <CharacterListPage />
           </Route>
-          <Route exact path={ CHARACTER_ROUTE }>
-            <CharacterPage />
+          <Route path={ CHARACTER_TABS_ROUTE }>
+            <CharacterPageTabs />
           </Route>
           <Route exact path={ ADD_CHARACTER_ROUTE }>
             <AddCharacterPage />

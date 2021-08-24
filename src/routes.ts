@@ -1,6 +1,9 @@
 //private routes
 export const CHARACTER_LIST_ROUTE: string = "/my/characters";
+export const CHARACTER_TABS_ROUTE: string = "/my/characters/view";
 export const CHARACTER_ROUTE: string = "/my/characters/view/:id";
+export const CHARACTER_INVENTORY_ROUTE: string = "/my/characters/view/:id/inventory";
+export const CHARACTER_BATTLE_ROUTE: string = "/my/characters/view/:id/battle";
 export const ADD_CHARACTER_ROUTE: string = "/my/characters/add";
 export const SETTINGS_ROUTE: string = "/my/settings";
 export const RESOURCE_MENU_ROUTE: string = "/my/resources";
