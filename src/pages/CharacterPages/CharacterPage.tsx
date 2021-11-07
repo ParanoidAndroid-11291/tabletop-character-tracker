@@ -28,6 +28,7 @@ import { useParams } from 'react-router';
 import { getCharacter, deleteCharacter } from '../../actions/CharacterActions';
 //files
 import { abilityScoreMod } from '../../calculations';
+import { CHARACTER_LIST_ROUTE } from '../../routes';
 //components
 import DecisionModal from '../../components/DecisionModal';
 //styles
@@ -72,7 +73,7 @@ const CharacterPage: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton/>
+            <IonBackButton defaultHref={ CHARACTER_LIST_ROUTE }/>
           </IonButtons>
           <IonButtons onClick={() => present()} slot="end">
             <IonButton color="danger">

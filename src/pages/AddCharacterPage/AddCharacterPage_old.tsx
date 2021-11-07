@@ -34,6 +34,10 @@ const AddCharacterPage: React.FC = () => {
 
   const initCharacterData = {
     name: '',
+    age: 0,
+    eye_color: "",
+    height: 0,
+    weight: 0,
     gender: '',
     level: 0,
     race: '',
@@ -50,7 +54,7 @@ const AddCharacterPage: React.FC = () => {
     int: 0,
     wis: 0,
     cha: 0
-  }
+  };
 
   const history = useHistory();
   const [ characterData, setCharacterData ] = useState<Character>(initCharacterData);

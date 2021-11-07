@@ -7,6 +7,10 @@ export const STATE_RESET = "STATE_RESET";
 export type Character = {
   id?: string;
   name: string;
+  age: number;
+  eye_color: string;
+  height: number;
+  weight: number;
   gender: string;
   level: number;
   race: string;

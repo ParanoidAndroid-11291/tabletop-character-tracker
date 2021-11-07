@@ -16,6 +16,10 @@ const defaultState: DefaultStateI = {
   character: {
     id: '',
     name: '',
+    age: 0,
+    eye_color: "",
+    height: 0,
+    weight: 0,
     gender: '',
     level: 0,
     race: '',
